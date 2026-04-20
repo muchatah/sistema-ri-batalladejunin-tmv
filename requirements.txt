@@ -1,0 +1,6 @@
+streamlit
+fpdf
+gspread
+google-auth
+streamlit-gsheets
+pandas
