@@ -25,11 +25,7 @@ PATH_SELLOS = os.path.join(ASSETS_DIR, "sellos")
 LOGO_PATH = os.path.join(ASSETS_DIR, "BJ_PNG.png")
 DB_NAME = os.path.join(os.path.dirname(__file__), "sistema_bj.db")
 
-try:
-    from streamlit_gsheets import GSheetsConnection
-    SHEETS_AVAILABLE = True
-except ImportError:
-    SHEETS_AVAILABLE = False
+SHEETS_AVAILABLE = False
 
 # --- CREDENCIALES GOOGLE DESDE st.secrets ---
 def get_google_credentials():

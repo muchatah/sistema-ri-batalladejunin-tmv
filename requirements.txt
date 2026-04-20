@@ -1,6 +1,5 @@
 streamlit
-fpdf
+fpdf2
 gspread
 google-auth
-streamlit-gsheets
 pandas
