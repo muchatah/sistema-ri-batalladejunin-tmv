@@ -191,12 +191,12 @@ df_empleados = obtener_empleados()
 # 5. MOTOR PDF
 # =========================================================
 MAPEO_SELLOS = {
-    "ADMINISTRACIÓN": "S_ADMIN.png", "COMERCIAL": "S_COMERCIAL.png",
-    "COMERCIO EXTERIOR": "S_COMERCIOEXTERIOR.png", "CONTABILIDAD": "S_CONTA.png",
-    "EQUIPOS": "S_EQUIPOS.png", "GERENCIA": "S_GERENCIA.png",
-    "GESTIÓN DE PROCESOS": "S_GESTIONDEPROCESOS.png", "INGENIERÍA": "S_INGENIERIA.png",
-    "LOGÍSTICA": "S_LOGISTICA.png", "OBRAS CIVILES": "S_OBRASCIVILES.png",
-    "PRODUCCIÓN": "S_PRODU.png", "RECURSOS HUMANOS": "S_RRHH.png", "SSOMA": "S_SSOMA.png"
+    "ADMINISTRACIÓN": "S_ADMIN.PNG", "COMERCIAL": "S_COMERCIAL.PNG",
+    "COMERCIO EXTERIOR": "S_COMERCIOEXTERIOR.PNG", "CONTABILIDAD": "S_CONTA.PNG",
+    "EQUIPOS": "S_EQUIPOS.PNG", "GERENCIA": "S_GERENCIA.PNG",
+    "GESTIÓN DE PROCESOS": "S_GESTIONDEPROCESOS.PNG", "INGENIERÍA": "S_INGENIERIA.PNG",
+    "LOGÍSTICA": "S_LOGISTICA.PNG", "OBRAS CIVILES": "S_OBRASCIVILES.PNG",
+    "PRODUCCIÓN": "S_PRODU.PNG", "RECURSOS HUMANOS": "S_RRHH.PNG", "SSOMA": "S_SSOMA.PNG"
 }
 
 MAPEO_CODIGOS = {
@@ -270,9 +270,9 @@ class PDF_BJ(FPDF):
         self.ln(20)
 
         area_upper = str(self.area_nombre).strip().upper()
-        sello_file = MAPEO_SELLOS.get(area_upper, "S_GESTIONDEPROCESOS.png")
+        sello_file = MAPEO_SELLOS.get(area_upper, "S_GESTIONDEPROCESOS.PNG")
         sello_path = os.path.join(PATH_SELLOS, sello_file)
-        s_gerencia = os.path.join(PATH_SELLOS, "S_GERENCIA.png")
+        s_gerencia = os.path.join(PATH_SELLOS, "S_GERENCIA.PNG")
 
         if os.path.exists(sello_path):
             self.image(sello_path, 30 + 2, y_sellos + 1, 33.5)
