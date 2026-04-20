@@ -12,6 +12,7 @@ from fpdf import FPDF
 import gspread
 from google.oauth2.service_account import Credentials
 import json
+from zoneinfo import ZoneInfo
 
 # --- 1. CONFIGURACIÓN ---
 st.set_page_config(page_title="RI - Batalla de Junin", page_icon="🏗️", layout="centered")
@@ -213,6 +214,7 @@ class PDF_BJ(FPDF):
         self.set_auto_page_break(auto=True, margin=65)
 
     def header(self):
+        self.set_font('Arial', '', 9)
         self.set_margins(30, 25, 30)
         self.set_xy(30, 25)
         self.cell(40, 25, "", border=1, align='C')
@@ -226,7 +228,7 @@ class PDF_BJ(FPDF):
         area_upper = str(self.area_nombre).strip().upper()
         codigo_area = MAPEO_CODIGOS.get(area_upper, "GP")
         codigo_doc = f"BJ-REG-{codigo_area}-SGC-01"
-        version_doc = f"01-{datetime.now().year}"
+        version_doc = f"01-{datetime.now(ZoneInfo("America/Lima")).year}"
 
         self.set_xy(140, 25)
         self.set_font('Arial', '', 8)
@@ -240,7 +242,7 @@ class PDF_BJ(FPDF):
 
         self.set_xy(140, 37.5)
         self.set_font('Arial', '', 8)
-        self.cell(40, 6.25, f"Fecha: {datetime.now().strftime('%d/%m/%Y')}", border=1, align='L')
+        self.cell(40, 6.25, f"Fecha: {datetime.now(ZoneInfo("America/Lima")).strftime('%d/%m/%Y')}", border=1, align='L')
         self.set_xy(140, 43.75)
         self.cell(40, 6.25, f"Página: {self.page_no()}", border=1, align='L')
         self.ln(12)
@@ -264,7 +266,7 @@ class PDF_BJ(FPDF):
         self.cell(w_col, 20, "", border=1)
 
         self.set_font('Arial', '', 8)
-        self.cell(w_col, 20, f"{datetime.now().strftime('%d/%m/%Y')}", border=1, align='C')
+        self.cell(w_col, 20, f"{datetime.now(ZoneInfo("America/Lima")).strftime('%d/%m/%Y')}", border=1, align='C')
         self.ln(20)
 
         area_upper = str(self.area_nombre).strip().upper()
@@ -430,7 +432,7 @@ if ro_id:
                         if quinto_porque:
                             causas_raices.append(f"{lbls[i]}: {quinto_porque}")
 
-                dt_cierre = datetime.now()
+                dt_cierre = datetime.now(ZoneInfo("America/Lima"))
                 fecha_cierre_str = dt_cierre.strftime('%d/%m/%Y')
                 hora_cierre_str = dt_cierre.strftime('%H:%M:%S')
                 fecha_cierre_full = str(dt_cierre)
@@ -495,7 +497,7 @@ else:
                 if st.form_submit_button("GENERAR PAPELETA"):
                     if len(desc) >= 20:
                         row_rec = df_empleados[df_empleados['Nombre'] == receptor].iloc[0]
-                        dt_emision = datetime.now()
+                        dt_emision = datetime.now(ZoneInfo("America/Lima"))
 
                         conn = get_connection()
                         cur = conn.cursor()
