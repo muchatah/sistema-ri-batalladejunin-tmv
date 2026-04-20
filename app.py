@@ -147,17 +147,21 @@ def get_connection():
     return sqlite3.connect(DB_NAME)
 
 def obtener_empleados():
-    if SHEETS_AVAILABLE:
-        try:
-            conn_gs = st.connection("gsheets", type=GSheetsConnection)
-            df = conn_gs.read(spreadsheet=URL_SHEETS, ttl=0)
-            df.columns = df.columns.str.strip()
-            return df
-        except:
-            pass
-    return pd.DataFrame([
-        {"Nombre": "Juan Perez", "Área": "Logística", "Rol": "Equipo", "Correo": "juanp@gmail.com", "WhatsApp": "983672634"}
-    ])
+    try:
+        creds = get_google_credentials()
+        if not creds:
+            raise Exception("Sin credenciales")
+        cliente = gspread.authorize(creds)
+        hoja = cliente.open_by_key(SPREADSHEET_ID).worksheet("Empleados")
+        datos = hoja.get_all_records(head=2)  # ← head=2 salta la fila duplicada
+        df = pd.DataFrame(datos)
+        df.columns = df.columns.str.strip()
+        return df
+    except Exception as e:
+        st.warning(f"⚠️ No se pudo cargar empleados desde Sheets: {e}")
+        return pd.DataFrame([
+            {"Nombre": "Juan Perez", "Área": "Logística", "Rol": "Equipo", "Correo": "juanp@gmail.com", "WhatsApp": "983672634"}
+        ])
 
 def init_db():
     conn = get_connection()
